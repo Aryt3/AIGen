@@ -48,4 +48,25 @@ object ApiService {
         }
         return null
     }
+
+    // Function for getting available Models
+    fun sendGetRequest(): String? {
+        val getRequest = Request.Builder()
+            .url(BASE_URL + "sd-models")
+            .build()
+
+        try {
+            client.newCall(getRequest).execute().use { response ->
+                if (response.isSuccessful) {
+                    val responseBody = response.body
+                    val result = responseBody?.string()
+                    return result
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return null
+    }
 }
