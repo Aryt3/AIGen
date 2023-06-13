@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.util.Base64
 import android.util.DisplayMetrics
+import android.util.Log
 import android.widget.*
 import org.json.JSONObject
 import java.io.*
@@ -38,6 +39,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
+        // importing objects from UI
         imageView = findViewById(R.id.imageView)
         responseTextView = findViewById(R.id.responseTextView)
         requestButton = findViewById(R.id.requestButton)
@@ -48,28 +50,43 @@ class MainActivity : ComponentActivity() {
         valueHeight = findViewById(R.id.height)
 
 
+        // Button for Image Generation Post Request
         requestButton.setOnClickListener {
             sendRequest()
         }
 
+        // Button to download a displayed Picture
         downloadButton.setOnClickListener {
             saveImage()
         }
+
+        // sendGetRequest()
+        // changeOptions()
     }
 
     private fun sendRequest() {
         val prompt = promptEditText.text.toString()
         val seekBarValue = valueSeekBar.progress + 1
         val steps = seekBarValue * 6
-        val width: Int = valueWidth.text.toString().toIntOrNull() ?: 0
-        val height: Int = valueHeight.text.toString().toIntOrNull() ?: 0
+        var width: Int = valueWidth.text.toString().toIntOrNull() ?: 0
+        var height: Int = valueHeight.text.toString().toIntOrNull() ?: 0
 
+        // Checking if inputs are usable otherwise reassigning them
+        if (width <= 0) {
+            width = 512
+        }
+        if (height <= 0) {
+            height = 512
+        }
+
+        // Displayed Prompt from Request
         val promptTextView: TextView = findViewById(R.id.promptTextView)
         promptTextView.text = "Prompt:\n$prompt"
         promptTextView.setTypeface(null, Typeface.BOLD)
 
+        // Launch Globscope to launch a request
         GlobalScope.launch {
-            val imageBytes = ApiService.sendPostRequest(prompt, steps, width, height)
+            val imageBytes = ApiService.sendPostRequestImg(prompt, steps, width, height)
             if (imageBytes != null) {
                 try {
                     val jsonResponse = String(imageBytes, Charsets.UTF_8)
@@ -97,7 +114,9 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    // Function to save picture to Local File System
     private fun saveImageToGallery(bitmap: Bitmap) {
+        // Generating unique name with time
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val fileName = "img_$timeStamp.png"
 
@@ -138,7 +157,7 @@ class MainActivity : ComponentActivity() {
         )
     }
 
-
+    // Function to save image to external Storage (Phones Gallery to be viewed instantly)
     private fun saveImage() {
         val imageDrawable = imageView.drawable
         if (imageDrawable is BitmapDrawable) {
@@ -148,4 +167,26 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    // Function to get all available models
+    private fun sendGetRequest() {
+        GlobalScope.launch {
+            val response = ApiService.sendGetRequest()
+            withContext(Dispatchers.Main) {
+                if (response != null) {
+                    // Handle the response here
+                    var models = response
+                }
+                if (response != null) {
+                    Log.d("main",response)
+                }
+            }
+        }
+    }
+
+    // Function to change used model (permanent)
+    private fun changeOptions() {
+        GlobalScope.launch {
+            ApiService.sendPostRequestOptions("dreamer")
+        }
+    }
 }
