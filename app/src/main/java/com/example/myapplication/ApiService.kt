@@ -69,4 +69,32 @@ object ApiService {
 
         return null
     }
+
+    // Request Function to change options like model used
+    fun sendPostRequestOptions(model: String): ByteArray? {
+        val mediaType = "application/json".toMediaType()
+        val requestBody = """
+            {
+                "sd_model_checkpoint": "$model"
+            }
+        """.trimIndent().toRequestBody(mediaType)
+
+        val request = Request.Builder()
+            .url(BASE_URL + "options")
+            .post(requestBody)
+            .build()
+
+        try {
+            client.newCall(request).execute().use { response ->
+                if (response.isSuccessful) {
+                    val responseBody = response.body
+                    val bytes = responseBody?.bytes()
+                    return bytes
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return null
+    }
 }
