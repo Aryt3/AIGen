@@ -69,9 +69,6 @@ class MainActivity : ComponentActivity() {
         downloadButton.setOnClickListener {
             saveImage()
         }
-
-        // sendGetRequest()
-        // changeOptions()
     }
 
     private fun sendRequest() {
@@ -174,29 +171,6 @@ class MainActivity : ComponentActivity() {
             val imageBitmap = imageDrawable.bitmap
             // Save the image to the gallery
             saveImageToGallery(imageBitmap)
-        }
-    }
-
-    // Function to get all available models
-    private fun sendGetRequest() {
-        GlobalScope.launch {
-            val response = ApiService.sendGetRequest()
-            withContext(Dispatchers.Main) {
-                if (response != null) {
-                    // Handle the response here
-                    var models = response
-                }
-                if (response != null) {
-                    Log.d("main",response)
-                }
-            }
-        }
-    }
-
-    // Function to change used model (permanent)
-    private fun changeOptions() {
-        GlobalScope.launch {
-            ApiService.sendPostRequestOptions("dreamer")
         }
     }
 }
