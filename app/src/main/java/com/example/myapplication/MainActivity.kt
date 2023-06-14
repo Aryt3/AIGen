@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.ContentValues
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Typeface
@@ -34,12 +35,14 @@ class MainActivity : ComponentActivity() {
     private lateinit var valueSeekBar: SeekBar
     private lateinit var valueWidth: EditText
     private lateinit var valueHeight: EditText
+    private lateinit var switchButton1: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
         // importing objects from UI
+        switchButton1 = findViewById(R.id.switchButton1)
         imageView = findViewById(R.id.imageView)
         responseTextView = findViewById(R.id.responseTextView)
         requestButton = findViewById(R.id.requestButton)
@@ -49,6 +52,13 @@ class MainActivity : ComponentActivity() {
         valueWidth = findViewById(R.id.width)
         valueHeight = findViewById(R.id.height)
 
+        // Button to switch Layout
+        switchButton1.setOnClickListener {
+            // Switch to SettingsActivity
+            val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+            startActivity(intent)
+            finish() // Finish the current activity
+        }
 
         // Button for Image Generation Post Request
         requestButton.setOnClickListener {

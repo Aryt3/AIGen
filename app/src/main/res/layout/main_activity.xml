@@ -6,6 +6,12 @@
     tools:context=".MainActivity"
     android:background="@color/grey" >
 
+    <Button
+        android:id="@+id/switchButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings" />
+
     <TextView
         android:id="@+id/promptTextView"
         android:layout_width="match_parent"
