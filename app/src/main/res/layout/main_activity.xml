@@ -123,7 +123,8 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="500dp"
         android:layout_marginEnd="16dp"
-        android:inputType="number" />
+        android:inputType="number"
+        android:hint="512" />
 
     <TextView
         android:id="@+id/heightLabel"
@@ -143,6 +144,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="500dp"
         android:layout_marginEnd="16dp"
-        android:inputType="number" />
+        android:inputType="number"
+        android:hint="512"/>
 
 </RelativeLayout>

@@ -74,7 +74,7 @@ class MainActivity : ComponentActivity() {
     private fun sendRequest() {
         val prompt = promptEditText.text.toString()
         val seekBarValue = valueSeekBar.progress + 1
-        val steps = seekBarValue * 6
+        val steps = seekBarValue * 10
         var width: Int = valueWidth.text.toString().toIntOrNull() ?: 0
         var height: Int = valueHeight.text.toString().toIntOrNull() ?: 0
 
