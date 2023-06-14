@@ -46,7 +46,8 @@ class SettingsActivity : AppCompatActivity() {
 
         // Forward new options
         save.setOnClickListener {
-            // Post Request to change settings
+            val selectedModel = modelNamesSpinner.selectedItem.toString()
+            changeModel(selectedModel)
         }
     }
 
@@ -78,6 +79,12 @@ class SettingsActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun changeModel(model: String) {
+        GlobalScope.launch{
+            ApiService.sendPostRequestOptions(model)
         }
     }
 }
