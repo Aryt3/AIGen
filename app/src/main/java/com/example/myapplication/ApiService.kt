@@ -13,7 +13,9 @@ import java.util.concurrent.TimeUnit
 object ApiService {
 
     // Declare Base URL to connect to
-    private const val BASE_URL = "http://192.168.1.55:7861/sdapi/v1/"
+    private const val DEFAULT_BASE_URL = "http://192.168.1.55:7861"
+
+    private var BASE_URL = DEFAULT_BASE_URL
 
     private val client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
@@ -22,6 +24,11 @@ object ApiService {
             level = HttpLoggingInterceptor.Level.BODY
         })
         .build()
+
+    // Function to change the Base URL dynamically
+    fun setBaseUrl(newBaseUrl: String) {
+        BASE_URL = newBaseUrl
+    }
 
     // Function for Image Generation
     fun sendPostRequestImg(prompt: String, steps: Int, width: Int, height: Int): ByteArray? {
@@ -36,7 +43,7 @@ object ApiService {
         """.trimIndent().toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url(BASE_URL + "txt2img")
+            .url("$BASE_URL/sdapi/v1/txt2img")
             .post(requestBody)
             .build()
 
@@ -57,7 +64,7 @@ object ApiService {
     // Function for getting available Models
     fun sendGetRequest(): String? {
         val getRequest = Request.Builder()
-            .url(BASE_URL + "sd-models")
+            .url("$BASE_URL/sdapi/v1/sd-models")
             .build()
 
         try {
@@ -85,7 +92,7 @@ object ApiService {
         """.trimIndent().toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url(BASE_URL + "options")
+            .url("$BASE_URL/sdapi/v1/options")
             .post(requestBody)
             .build()
 

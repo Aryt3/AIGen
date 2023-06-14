@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.Dispatchers
@@ -21,11 +22,16 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var reload: Button
     private lateinit var save: Button
     private lateinit var modelNamesSpinner: Spinner
+    private lateinit var urlEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings)
 
+        // setup base_url
+        urlEditText = findViewById(R.id.urlEditText)
+
+        // get other objects from xml
         reload = findViewById(R.id.reload)
         save = findViewById(R.id.save)
         modelNamesSpinner = findViewById(R.id.modelNamesSpinner)
@@ -45,8 +51,12 @@ class SettingsActivity : AppCompatActivity() {
 
         // Forward new options
         save.setOnClickListener {
-            val selectedModel = modelNamesSpinner.selectedItem.toString()
-            changeModel(selectedModel)
+            val selectedModel = modelNamesSpinner.selectedItem?.toString()
+            if (selectedModel != null) {
+                changeModel(selectedModel)
+            }
+            val newBaseUrl = urlEditText.text.toString()
+            ApiService.setBaseUrl(newBaseUrl)
         }
     }
 

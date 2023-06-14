@@ -44,4 +44,21 @@
         android:layout_below="@id/textAIModels"
         android:layout_marginTop="8dp" />
 
+    <TextView
+        android:id="@+id/textUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="URL:"
+        android:layout_below="@id/modelNamesSpinner"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/urlEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textUrl"
+        android:hint="http://192.168.1.55:7861"
+        android:inputType="text" />
+
 </RelativeLayout>
