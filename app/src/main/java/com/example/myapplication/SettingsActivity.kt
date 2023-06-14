@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
+import com.example.myapplication.ApiService.sendPostRequestOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -46,7 +48,8 @@ class SettingsActivity : AppCompatActivity() {
 
         // Forward new options
         save.setOnClickListener {
-            // Post Request to change settings
+            val selectedModel = modelNamesSpinner.selectedItem.toString()
+            changeModel(selectedModel)
         }
     }
 
@@ -78,6 +81,12 @@ class SettingsActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun changeModel(model: String) {
+        GlobalScope.launch{
+            sendPostRequestOptions(model)
         }
     }
 }
