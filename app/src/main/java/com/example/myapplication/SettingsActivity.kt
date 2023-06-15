@@ -56,7 +56,11 @@ class SettingsActivity : AppCompatActivity() {
                 changeModel(selectedModel)
             }
             val newBaseUrl = urlEditText.text.toString()
-            ApiService.setBaseUrl(newBaseUrl)
+            if (newBaseUrl.isEmpty()) {
+                ApiService.setBaseUrl("http://192.168.1.55:7861")
+            } else {
+                ApiService.setBaseUrl(newBaseUrl)
+            }
         }
     }
 
