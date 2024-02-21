@@ -8,10 +8,6 @@
 > [!NOTE]
 > To enable the backend Application as an API we can launch it by using the command `python3 launch.py --nowebui`.<br>
 
-<img src="https://github.com/Th1s1s1t/AIGen/assets/110562298/67bb03a6-bebe-40e8-9923-c31069b84162)" width="33%">
-
-----
-
 The App offers the most basic settings at moment to generate an image. <br/>
 `Properties:`
  - `prompt`: Text used to generate the image.
@@ -19,7 +15,7 @@ The App offers the most basic settings at moment to generate an image. <br/>
  - `width`: Width of the generated image.
  - `height`: Height of the generated image.
 
-## Examples
+### Examples
 
 <div style="display: flex;">
   <img src="https://github.com/Th1s1s1t/AIGen/assets/110562298/324a723a-c288-4ac0-afe0-28f9e85585a8" width="33%">
